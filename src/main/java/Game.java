@@ -72,8 +72,21 @@ public class Game {
     }
 
     public boolean checkForWin() {
+        return (checkForColumnWin() || checkForColumnWin());
+    }
+
+    private boolean checkForRowWin() {
         for (int i = 0; i < board.length; i++) {
             if (checkRowColumn(board[i][0], board[i][1], board[i][2])) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean checkForColumnWin() {
+        for (int i = 0; i < 3; i++) {
+            if (checkRowColumn(board[0][i], board[1][i], board[2][i])) {
                 return true;
             }
         }
