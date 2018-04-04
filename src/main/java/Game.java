@@ -1,15 +1,19 @@
 public class Game {
 
     private String[][] board;
-    private String currentPlayer;
+    private Player player;
 
     public Game(int size) {
         board = new String[size][size];
-        currentPlayer = "x";
+        player = Player.X;
         initializeBoard(size);
     }
 
-    public void setBoard(String[][] board) {
+    private String getTokenOfCurrentPlayer() {
+        return player.getToken();
+    }
+
+    private void setBoard(String[][] board) {
         this.board = board;
     }
 
@@ -18,39 +22,61 @@ public class Game {
     }
 
     private void initializeBoard(int size) {
-        for (int row = 0; row < size; row++){
-            for (int column = 0; column < size; column++){
+        for (int row = 0; row < size; row++) {
+            for (int column = 0; column < size; column++) {
                 board[row][column] = "-";
             }
         }
     }
 
-    public void play(int x, int y) {
+    public void placeMarker(int x, int y) {
 
         //String[][] currentBoard = getBoard();
-        for (int row = 0; row < board.length; row++) {
-            for (int column = 0; column < board.length; column++) {
-                board[x][y] = currentPlayer;
-                changePlayers();
-            }
-        }
+        //for (int row = 0; row < board.length; row++) {
+        //for (int column = 0; column < board.length; column++) {
+        board[x][y] = getTokenOfCurrentPlayer();
+        changePlayers();
+        // }
+        //}
     }
 
-    public void changePlayers(){
-        if (currentPlayer.equals("x")){
-            currentPlayer = "o";
+    private void changePlayers() {
+        if (player.equals(Player.X)) {
+            player = Player.O;
         } else {
-            currentPlayer = "x";
+            player = Player.X;
         }
     }
 
-    public void updateBoard(String[][] currentBoard, int x, int y ){
+    private void updateBoard(String[][] currentBoard, int x, int y) {
         currentBoard = getBoard();
-        play(x,y);
+        placeMarker(x, y);
         setBoard(currentBoard);
     }
 
     public boolean isOver() {
+        return false;
+    }
+
+//    public String[] getRow(){
+//        for (int i = 0; i < board.length; i++){
+//
+//        }
+//    }
+
+    public boolean checkRowColumn(String s1, String s2, String s3) {
+        if (!s1.equals("-") && (s1 == s2) && (s2 == s3)) {
+            return true;
+        }
+            return false;
+    }
+
+    public boolean checkForWin() {
+        for (int i = 0; i < board.length; i++) {
+            if (checkRowColumn(board[i][0], board[i][1], board[i][2])) {
+                return true;
+            }
+        }
         return false;
     }
 }
