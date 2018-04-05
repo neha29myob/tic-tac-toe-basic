@@ -36,7 +36,7 @@ public class GameTest {
     }
 
     @Test
-    public void whenPlayerCapturedTheFirstRowReturnWinner(){
+    public void whenPlayerCapturedARowReturnWinner(){
         String[][] expected = {{"x","x","x"},
                                {"o","-","o"},
                                {"-","-","-"}};
@@ -61,6 +61,34 @@ public class GameTest {
         game.placeMarker(1,2);
         game.placeMarker(2,1);
         //Assert.assertArrayEquals(expected, game.getBoard());
+       assertTrue(game.checkForWin());
+    }
+
+    @Test
+    public void whenPlayerCapturedADiagonalLeftToRightReturnWinner(){
+        String[][] expected = {{"x","o","-"},
+                               {"-","x","-"},
+                               {"-","o","x"}};
+        game.placeMarker(0,0);
+        game.placeMarker(0,1);
+        game.placeMarker(1,1);
+        game.placeMarker(2,1);
+        game.placeMarker(2,2);
+        Assert.assertArrayEquals(expected, game.getBoard());
+       assertTrue(game.checkForWin());
+    }
+
+    @Test
+    public void whenPlayerCapturedADiagonalRightToLeftReturnWinner(){
+        String[][] expected = {{"-","o","x"},
+                               {"-","x","-"},
+                               {"x","o","-"}};
+        game.placeMarker(0,2);
+        game.placeMarker(0,1);
+        game.placeMarker(1,1);
+        game.placeMarker(2,1);
+        game.placeMarker(2,0);
+        Assert.assertArrayEquals(expected, game.getBoard());
        assertTrue(game.checkForWin());
     }
 
