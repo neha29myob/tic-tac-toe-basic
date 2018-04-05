@@ -1,3 +1,8 @@
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+
 public class Game {
 
     private String[][] board;
@@ -49,7 +54,7 @@ public class Game {
     }
 
     private boolean isMoveOutOBounds(int x, int y) {
-        return (x < 0 && x > board.length && y < 0 && y > board.length);
+        return (x < 0 && x > getBoardSize() && y < 0 && y > getBoardSize());
     }
 
     private void changePlayers() {
@@ -68,8 +73,8 @@ public class Game {
 
     private boolean isDraw() {
         boolean isFull = true;
-        for (int row = 0; row < board.length; row++) {
-            for (int column = 0; column < board.length; column++) {
+        for (int row = 0; row < getBoardSize(); row++) {
+            for (int column = 0; column < getBoardSize(); column++) {
                 if(board[row][column] == "-"){
                     isFull = false;
                 }
@@ -84,35 +89,39 @@ public class Game {
 //        }
 //    }
 
-    public boolean checkRowColumn(String s1, String s2, String s3) {
-        if (!s1.equals("-") && (s1 == s2) && (s2 == s3)) {
-            return true;
-        }
-            return false;
+    public boolean checkRowColumn(List<String> winningLine) {
+
+        return ((winningLine.get(0)!="-") && Collections.frequency(winningLine, winningLine.get(0)) == getBoardSize());
+
+    }
+
+    private int getBoardSize() {
+        return board.length;
     }
 
     public boolean checkForWin() {
-        return (checkForRowWin() || checkForColumnWin());
+        return (checkForRowWin());
     }
 
     private boolean checkForRowWin() {
 
         for (int i = 0; i < board.length; i++) {
+            List<String> rows = new ArrayList<>();
             for(int j = 0; j< board.length; j++)
-
-            if (checkRowColumn(board[i][0], board[i][1], board[i][2])) {
-                return true;
-            }
+                rows.add((board[i][j]));
+                if(checkRowColumn(rows)){
+                    return true;
+                }
         }
         return false;
     }
 
-    private boolean checkForColumnWin() {
-        for (int i = 0; i < board.length; i++) {
-            if (checkRowColumn(board[0][i], board[1][i], board[2][i])) {
-                return true;
-            }
-        }
-        return false;
-    }
+//    private boolean checkForColumnWin() {
+//        for (int i = 0; i < board.length; i++) {
+//            if (checkRowColumn(board[0][i], board[1][i], board[2][i])) {
+//                return true;
+//            }
+//        }
+//        return false;
+//    }
 }
