@@ -65,27 +65,18 @@ public class GameTest {
        assertTrue(game.checkForWin());
     }
 
-    @Test
-    public void whenAPlayerWinsThenGameIsOver(){
-        String[][] expected = {{"x","o","x"},
-                               {"-","o","x"},
-                               {"-","o","-"}};
+    @Test(expected = IllegalArgumentException.class)
+    public void shouldThrowExceptionWhenMarkerIsPlacedAfterTheGameIsWon(){
         game.placeMarker(0,0);
+        game.placeMarker(1,0);
         game.placeMarker(0,1);
-        game.placeMarker(0,2);
-        game.placeMarker(1,1);
         game.placeMarker(1,2);
-        game.placeMarker(2,1);
-        game.placeMarker(2,2);
-        Assert.assertArrayEquals(expected, game.getBoard());
-        assertTrue(game.isOver());
+        game.placeMarker(0,2); //player already won here
+        game.placeMarker(2,0);
     }
 
-    @Test
-    public void whenMatchIsDrawThenGameIsOver(){
-        String[][] expected = {{"x","o","x"},
-                               {"o","o","x"},
-                               {"x","x","o"}};
+    @Test(expected = IllegalArgumentException.class)
+    public void shouldThrowExceptionWhenMarkerIsPlacedAfterTheGameIsDraw(){
         game.placeMarker(0,0);
         game.placeMarker(0,1);
         game.placeMarker(0,2);
@@ -94,9 +85,17 @@ public class GameTest {
         game.placeMarker(1,1);
         game.placeMarker(2,1);
         game.placeMarker(2,2);
+        game.placeMarker(2,0); // Match is draw here
         game.placeMarker(2,0);
-        Assert.assertArrayEquals(expected, game.getBoard());
-       assertTrue(game.isOver());
+    }
+
+    @Test(expected = IndexOutOfBoundsException.class)
+    public void shouldThrowExceptionWhenMarkerIsPlacedOutOfBoard(){
+        game.placeMarker(0,0);
+        game.placeMarker(1,0);
+        game.placeMarker(0,1);
+        game.placeMarker(8,2);
+
     }
 
 }

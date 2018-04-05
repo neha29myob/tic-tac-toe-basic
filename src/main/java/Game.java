@@ -31,7 +31,14 @@ public class Game {
 
     public void placeMarker(int x, int y) {
 
-        if(!checkForWin() && isSafeToPlaceMarker(x,y) ){
+        if(isOver()) {
+            throw new IllegalArgumentException("Can't place the markers");
+        }
+
+        if (isMoveOutOBounds(x,y)){
+            throw new IndexOutOfBoundsException("Can't place the markers");
+
+        } else {
             board[x][y] = getTokenOfCurrentPlayer();
             changePlayers();
         }
@@ -46,13 +53,7 @@ public class Game {
     }
 
     private void changePlayers() {
-        player = player.equals(Player.X)? Player.O : Player.X;
-
-//        if (player.equals(Player.X)) {
-//            player = Player.O;
-//        } else {
-//            player = Player.X;
-//        }
+        player = player.equals(Player.X) ? Player.O : Player.X;
     }
 
     private void updateBoard(String[][] currentBoard, int x, int y) {
@@ -62,22 +63,19 @@ public class Game {
     }
 
     public boolean isOver() {
-        if(checkForWin() || isDraw()){
-            return  true;
-        }
-        return false;
+        return  isDraw();
     }
 
     private boolean isDraw() {
-
+        boolean isFull = true;
         for (int row = 0; row < board.length; row++) {
             for (int column = 0; column < board.length; column++) {
-                if(!(board[row][column] == "-")){
-                    return true;
+                if(board[row][column] == "-"){
+                    isFull = false;
                 }
             }
         }
-        return false;
+        return isFull;
     }
 
 //    public String[] getRow(){
@@ -98,7 +96,10 @@ public class Game {
     }
 
     private boolean checkForRowWin() {
+
         for (int i = 0; i < board.length; i++) {
+            for(int j = 0; j< board.length; j++)
+
             if (checkRowColumn(board[i][0], board[i][1], board[i][2])) {
                 return true;
             }
