@@ -31,21 +31,28 @@ public class Game {
 
     public void placeMarker(int x, int y) {
 
-        //String[][] currentBoard = getBoard();
-        //for (int row = 0; row < board.length; row++) {
-        //for (int column = 0; column < board.length; column++) {
-        board[x][y] = getTokenOfCurrentPlayer();
-        changePlayers();
-        // }
-        //}
+        if(!checkForWin() && isSafeToPlaceMarker(x,y) ){
+            board[x][y] = getTokenOfCurrentPlayer();
+            changePlayers();
+        }
+    }
+
+    private boolean isSafeToPlaceMarker(int x, int y){
+        return (!isMoveOutOBounds(x,y) && board[x][y].equals("-"));
+    }
+
+    private boolean isMoveOutOBounds(int x, int y) {
+        return (x < 0 && x > board.length && y < 0 && y > board.length);
     }
 
     private void changePlayers() {
-        if (player.equals(Player.X)) {
-            player = Player.O;
-        } else {
-            player = Player.X;
-        }
+        player = player.equals(Player.X)? Player.O : Player.X;
+
+//        if (player.equals(Player.X)) {
+//            player = Player.O;
+//        } else {
+//            player = Player.X;
+//        }
     }
 
     private void updateBoard(String[][] currentBoard, int x, int y) {
@@ -55,6 +62,21 @@ public class Game {
     }
 
     public boolean isOver() {
+        if(checkForWin() || isDraw()){
+            return  true;
+        }
+        return false;
+    }
+
+    private boolean isDraw() {
+
+        for (int row = 0; row < board.length; row++) {
+            for (int column = 0; column < board.length; column++) {
+                if(!(board[row][column] == "-")){
+                    return true;
+                }
+            }
+        }
         return false;
     }
 
@@ -72,7 +94,7 @@ public class Game {
     }
 
     public boolean checkForWin() {
-        return (checkForColumnWin() || checkForColumnWin());
+        return (checkForRowWin() || checkForColumnWin());
     }
 
     private boolean checkForRowWin() {
@@ -85,7 +107,7 @@ public class Game {
     }
 
     private boolean checkForColumnWin() {
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < board.length; i++) {
             if (checkRowColumn(board[0][i], board[1][i], board[2][i])) {
                 return true;
             }

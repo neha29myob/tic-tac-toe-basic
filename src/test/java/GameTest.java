@@ -53,15 +53,50 @@ public class GameTest {
     public void whenPlayerCapturedAColumnReturnWinner(){
         String[][] expected = {{"x","o","x"},
                                {"-","o","x"},
-                               {"-","-","-"}};
+                               {"-","o","-"}};
         game.placeMarker(0,0);
         game.placeMarker(0,1);
         game.placeMarker(0,2);
         game.placeMarker(1,1);
         game.placeMarker(1,2);
         game.placeMarker(2,1);
-        //Assert.assertArrayEquals(expected, game.getBoard());
-        assertTrue(game.checkForWin());
+        //game.placeMarker(2,0);
+        Assert.assertArrayEquals(expected, game.getBoard());
+       assertTrue(game.checkForWin());
+    }
+
+    @Test
+    public void whenAPlayerWinsThenGameIsOver(){
+        String[][] expected = {{"x","o","x"},
+                               {"-","o","x"},
+                               {"-","o","-"}};
+        game.placeMarker(0,0);
+        game.placeMarker(0,1);
+        game.placeMarker(0,2);
+        game.placeMarker(1,1);
+        game.placeMarker(1,2);
+        game.placeMarker(2,1);
+        game.placeMarker(2,2);
+        Assert.assertArrayEquals(expected, game.getBoard());
+        assertTrue(game.isOver());
+    }
+
+    @Test
+    public void whenMatchIsDrawThenGameIsOver(){
+        String[][] expected = {{"x","o","x"},
+                               {"o","o","x"},
+                               {"x","x","o"}};
+        game.placeMarker(0,0);
+        game.placeMarker(0,1);
+        game.placeMarker(0,2);
+        game.placeMarker(1,0);
+        game.placeMarker(1,2);
+        game.placeMarker(1,1);
+        game.placeMarker(2,1);
+        game.placeMarker(2,2);
+        game.placeMarker(2,0);
+        Assert.assertArrayEquals(expected, game.getBoard());
+       assertTrue(game.isOver());
     }
 
 }
