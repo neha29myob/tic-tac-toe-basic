@@ -36,11 +36,11 @@ public class Game {
 
     public void placeMarker(int x, int y) {
 
-        if(isOver()) {
+        if (isOver()) {
             throw new IllegalArgumentException("Can't place the markers");
         }
 
-        if (isMoveOutOBounds(x,y)){
+        if (isMoveOutOBounds(x, y)) {
             throw new IndexOutOfBoundsException("Can't place the markers");
 
         } else {
@@ -49,8 +49,8 @@ public class Game {
         }
     }
 
-    private boolean isSafeToPlaceMarker(int x, int y){
-        return (!isMoveOutOBounds(x,y) && board[x][y].equals("-"));
+    private boolean isSafeToPlaceMarker(int x, int y) {
+        return (!isMoveOutOBounds(x, y) && board[x][y].equals("-"));
     }
 
     private boolean isMoveOutOBounds(int x, int y) {
@@ -68,14 +68,14 @@ public class Game {
     }
 
     public boolean isOver() {
-        return  isDraw();
+        return (checkForWin() || isDraw());
     }
 
     private boolean isDraw() {
         boolean isFull = true;
         for (int row = 0; row < getBoardSize(); row++) {
             for (int column = 0; column < getBoardSize(); column++) {
-                if(board[row][column] == "-"){
+                if (board[row][column] == "-") {
                     isFull = false;
                 }
             }
@@ -83,16 +83,8 @@ public class Game {
         return isFull;
     }
 
-//    public String[] getRow(){
-//        for (int i = 0; i < board.length; i++){
-//
-//        }
-//    }
-
     public boolean checkRowColumn(List<String> winningLine) {
-
-        return ((winningLine.get(0)!="-") && Collections.frequency(winningLine, winningLine.get(0)) == getBoardSize());
-
+        return ((winningLine.get(0) != "-") && Collections.frequency(winningLine, winningLine.get(0)) == getBoardSize());
     }
 
     private int getBoardSize() {
@@ -100,28 +92,45 @@ public class Game {
     }
 
     public boolean checkForWin() {
-        return (checkForRowWin());
+        return (checkForRowWin() || checkForColumnWin()|| checkForDiagonalWin());
     }
 
     private boolean checkForRowWin() {
 
-        for (int i = 0; i < board.length; i++) {
+        for (int row = 0; row < getBoardSize(); row++) {
             List<String> rows = new ArrayList<>();
-            for(int j = 0; j< board.length; j++)
-                rows.add((board[i][j]));
-                if(checkRowColumn(rows)){
-                    return true;
-                }
+            for (int column = 0; column < getBoardSize(); column++)
+                rows.add((board[row][column]));
+            if (checkRowColumn(rows)) {
+                return true;
+            }
         }
         return false;
     }
 
-//    private boolean checkForColumnWin() {
-//        for (int i = 0; i < board.length; i++) {
+    private boolean checkForColumnWin() {
+        for (int column = 0; column < getBoardSize(); column++) {
+            List<String> columns = new ArrayList<>();
+            for (int row = 0; row < getBoardSize(); row++)
+                columns.add(board[row][column]);
+            if (checkRowColumn(columns)) {
+                return true;
+            }
+//
 //            if (checkRowColumn(board[0][i], board[1][i], board[2][i])) {
 //                return true;
-//            }
-//        }
-//        return false;
-//    }
+        }
+        return false;
+    }
+
+    private boolean checkForDiagonalWin() {
+        for (int i = 0; i < getBoardSize(); i++) {
+            List<String> diagonalsLR = new ArrayList<>();
+            diagonalsLR.add(board[i][i]);
+            if (checkRowColumn(diagonalsLR)) {
+                return true;
+            }
+        }
+            return false;
+        }
 }
