@@ -8,7 +8,7 @@ public class Board {
     public Board(int size) {
         board = new String[size][size];
         initializeBoard(size);
-        }
+    }
 
     private void initializeBoard(int size) {
         for (int row = 0; row < size; row++) {
@@ -22,15 +22,6 @@ public class Board {
         return board.length;
     }
 
-//    private List<String> getRow(){
-//        List<String> rows = new ArrayList<>();
-//        for (int row = 0; row < getBoardSize(); row++) {
-//            for (int column = 0; column < getBoardSize(); column++)
-//                rows.add((board[row][column]));
-//        }
-//        return rows;
-//    }
-
     public void placeMarker(int x, int y, String token) {
 
         board[x][y] = token;
@@ -40,11 +31,11 @@ public class Board {
         return (x < 0 && x > getBoardSize() && y < 0 && y > getBoardSize());
     }
 
-    public boolean isEmpty(int x, int y) {
-        return board[x][y].equals("-");
+    public boolean isOccupied(int x, int y) {
+        return !board[x][y].equals("-");
     }
 
-    public boolean isDraw() {
+    public boolean isFull() {
         boolean isFull = true;
         for (int row = 0; row < getBoardSize(); row++) {
             for (int column = 0; column < getBoardSize(); column++) {
@@ -56,11 +47,11 @@ public class Board {
         return isFull;
     }
 
-    public boolean isWinningLine(List<String> winningLine) {
+    private boolean isWinningLine(List<String> winningLine) {
         return ((winningLine.get(0) != "-") && Collections.frequency(winningLine, winningLine.get(0)) == getBoardSize());
     }
 
-    public boolean checkForWin() {
+    public boolean hasWinner() {
         return (checkForRowWin() || checkForColumnWin()|| checkForDiagonalWin());
     }
 
@@ -77,8 +68,6 @@ public class Board {
         }
         return false;
     }
-
-
 
     private boolean checkForColumnWin() {
         for (int column = 0; column < getBoardSize(); column++) {
