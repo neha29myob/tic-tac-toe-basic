@@ -1,8 +1,7 @@
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertEquals;
 
 public class GameTest {
     private Game game;
@@ -14,9 +13,8 @@ public class GameTest {
 
     @Test
     public void gameBoardIsInitialised(){
-      assertFalse(game.isOver());
+      assertEquals(GameState.PLAYING, game.getStatus());
     }
-
 
     @Test
     public void whenPlayerCapturedARowReturnWinner(){
@@ -25,7 +23,14 @@ public class GameTest {
         game.play(2,1);
         game.play(1,2);
         game.play(2,2);
-        assertTrue(game.isOver());
+        assertEquals(GameState.WIN, game.getStatus());
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void whenPlayerPlacesMarkerOverAnExistingMarkerShouldThrowException(){
+        game.play(2,0);
+        game.play(1,0);
+        game.play(1,0);
     }
 
     @Test
@@ -37,7 +42,8 @@ public class GameTest {
         game.play(1,1);
         game.play(1,2);
         game.play(2,1);
-       assertTrue(game.isOver());
+        assertEquals(GameState.WIN, game.getStatus());
+
     }
 
     @Test
@@ -47,7 +53,8 @@ public class GameTest {
         game.play(1,1);
         game.play(2,1);
         game.play(2,2);
-       assertTrue(game.isOver());
+       assertEquals(GameState.WIN, game.getStatus());
+
     }
 
     @Test
@@ -57,21 +64,11 @@ public class GameTest {
         game.play(1,1);
         game.play(2,1);
         game.play(2,0);
-       assertTrue(game.isOver());
+        assertEquals(GameState.WIN, game.getStatus());
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void shouldThrowExceptionWhenMarkerIsPlacedAfterTheGameIsWon(){
-        game.play(0,0);
-        game.play(1,0);
-        game.play(0,1);
-        game.play(1,2);
-        game.play(0,2); //player already won here
-        game.play(2,0);
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void shouldThrowExceptionWhenMarkerIsPlacedAfterTheGameIsDraw(){
+    @Test
+    public void shouldSetStatusToDrawAfterGameIsDraw(){
         game.play(0,0);
         game.play(0,1);
         game.play(0,2);
@@ -80,8 +77,8 @@ public class GameTest {
         game.play(1,1);
         game.play(2,1);
         game.play(2,2);
-        game.play(2,0); // Match is draw here
-        game.play(2,0);
+        game.play(2,0);// Match is draw here
+        assertEquals(GameState.DRAW, game.getStatus());
     }
 
     @Test(expected = IndexOutOfBoundsException.class)

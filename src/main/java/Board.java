@@ -40,7 +40,11 @@ public class Board {
         return (x < 0 && x > getBoardSize() && y < 0 && y > getBoardSize());
     }
 
-    private boolean isDraw() {
+    public boolean isEmpty(int x, int y) {
+        return board[x][y].equals("-");
+    }
+
+    public boolean isDraw() {
         boolean isFull = true;
         for (int row = 0; row < getBoardSize(); row++) {
             for (int column = 0; column < getBoardSize(); column++) {
@@ -60,10 +64,6 @@ public class Board {
         return (checkForRowWin() || checkForColumnWin()|| checkForDiagonalWin());
     }
 
-    public boolean isOver() {
-        return (checkForWin() || isDraw());
-    }
-
     private boolean checkForRowWin() {
 
         for (int row = 0; row < getBoardSize(); row++) {
@@ -77,6 +77,8 @@ public class Board {
         }
         return false;
     }
+
+
 
     private boolean checkForColumnWin() {
         for (int column = 0; column < getBoardSize(); column++) {
