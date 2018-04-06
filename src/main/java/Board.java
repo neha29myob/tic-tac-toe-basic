@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+import java.util.List;
+
 public class Board {
     private String[][] board;
 
@@ -17,6 +20,38 @@ public class Board {
             }
         }
     }
+
+    private int getBoardSize() {
+        return board.length;
+    }
+
+    private List<String> getRow(){
+        List<String> rows = new ArrayList<>();
+        for (int row = 0; row < getBoardSize(); row++) {
+            for (int column = 0; column < getBoardSize(); column++)
+                rows.add((board[row][column]));
+        }
+        return rows;
+    }
+
+    private boolean isFull() {
+        boolean isFull = true;
+        for (int row = 0; row < getBoardSize(); row++) {
+            for (int column = 0; column < getBoardSize(); column++) {
+                if (board[row][column] == "-") {
+                    isFull = false;
+                }
+            }
+        }
+        return isFull;
+    }
+
+    public void placeMarker(Coordinates coordinates, String token){
+
+        board[coordinates.getX()][coordinates.getY()] = token;
+
+    }
+
 
 
 

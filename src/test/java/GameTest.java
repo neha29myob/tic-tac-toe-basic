@@ -37,14 +37,14 @@ public class GameTest {
 
     @Test
     public void whenPlayerCapturedARowReturnWinner(){
-        String[][] expected = {{"x","x","x"},
+        String[][] expected = {{"-","-","-"},
                                {"o","-","o"},
-                               {"-","-","-"}};
-        game.placeMarker(0,0);
+                               {"x","x","x"}};
+        game.placeMarker(2,0);
         game.placeMarker(1,0);
-        game.placeMarker(0,1);
+        game.placeMarker(2,1);
         game.placeMarker(1,2);
-        game.placeMarker(0,2);
+        game.placeMarker(2,2);
         //Assert.assertArrayEquals(expected, game.getBoard());
         assertTrue(game.checkForWin());
     }

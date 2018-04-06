@@ -1,14 +1,16 @@
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
 public class Game {
 
+    private Board board1;
     private String[][] board;
     private Player player;
 
     public Game(int size) {
+
+        board1 = new Board(size);
         board = new String[size][size];
         player = Player.X;
         initializeBoard(size);
@@ -85,12 +87,15 @@ public class Game {
         return (checkForRowWin() || checkForColumnWin()|| checkForDiagonalWin());
     }
 
+
+
     private boolean checkForRowWin() {
 
         for (int row = 0; row < getBoardSize(); row++) {
             List<String> rows = new ArrayList<>();
             for (int column = 0; column < getBoardSize(); column++)
                 rows.add((board[row][column]));
+
             if (isWinningLine(rows)) {
                 return true;
             }
@@ -127,10 +132,6 @@ public class Game {
             }
             return false;
         }
-
-    private boolean isSafeToPlaceMarker(int x, int y) {
-        return (!isMoveOutOBounds(x, y) && board[x][y].equals("-"));
-    }
 
     private void updateBoard(String[][] currentBoard, int x, int y) {
         currentBoard = getBoard();
