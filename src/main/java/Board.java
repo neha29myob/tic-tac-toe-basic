@@ -18,12 +18,25 @@ public class Board {
         }
     }
 
+    @Override
+    public String toString() {
+
+        StringBuilder printBoard = new StringBuilder();
+
+        for (int row = 0; row < getBoardSize(); row++) {
+            for (int column = 0; column < getBoardSize(); column++) {
+                printBoard.append(board[row][column] + " ");
+            }
+            printBoard.append("\n");
+        }
+        return printBoard.toString();
+    }
+
     private int getBoardSize() {
         return board.length;
     }
 
     public void placeMarker(int x, int y, String token) {
-
         board[x][y] = token;
     }
 
@@ -56,7 +69,6 @@ public class Board {
     }
 
     private boolean checkForRowWin() {
-
         for (int row = 0; row < getBoardSize(); row++) {
             List<String> rows = new ArrayList<>();
             for (int column = 0; column < getBoardSize(); column++)

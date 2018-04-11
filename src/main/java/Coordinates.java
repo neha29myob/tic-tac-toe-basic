@@ -7,9 +7,8 @@ public class Coordinates {
         this.y = y;
     }
 
-    public Coordinates convertInput(String input){
+    public static Coordinates convertInput(String input){
         String[] position = input.split(",");
-
         return new Coordinates(Integer.parseInt(position[0])-1, Integer.parseInt(position[1])-1);
     }
 

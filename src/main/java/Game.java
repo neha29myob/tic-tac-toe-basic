@@ -11,11 +11,18 @@ public class Game {
         player = Player.X;
     }
 
-    private String getTokenOfCurrentPlayer() {
-        return player.getToken();
+    public String printBoard() {
+        return board.toString();
     }
 
     public void play(int x, int y) {
+
+        board.placeMarker(x, y, getTokenOfCurrentPlayer());
+        updateGameStatus();
+        changePlayers();
+    }
+
+    public boolean isValid(int x, int y) {
 
         if (board.isMoveOutOBounds(x, y)) {
             throw new IndexOutOfBoundsException("Can't place the markers");
@@ -24,13 +31,13 @@ public class Game {
         if (board.isOccupied(x, y)) {
             throw new IllegalArgumentException("Oh no, a piece is already at this place! Try again...");
         }
-        board.placeMarker(x, y, getTokenOfCurrentPlayer());
-        updateGameStatus();
-        changePlayers();
+
+        return true;
     }
 
+
     private void updateGameStatus() {
-       status =  board.hasWinner() ? GameState.WIN : board.isFull() ? GameState.DRAW : GameState.PLAYING;
+        status = board.hasWinner() ? GameState.WIN : board.isFull() ? GameState.DRAW : GameState.PLAYING;
     }
 
     private void changePlayers() {
@@ -39,6 +46,10 @@ public class Game {
 
     public GameState getStatus() {
         return status;
+    }
+
+    public String getTokenOfCurrentPlayer() {
+        return player.getToken();
     }
 
 }

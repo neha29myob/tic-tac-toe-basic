@@ -35,7 +35,6 @@ public class GameTest {
 
     @Test
     public void whenPlayerCapturedAColumnReturnWinner(){
-
         game.play(0,0);
         game.play(0,1);
         game.play(0,2);
@@ -86,7 +85,7 @@ public class GameTest {
         game.play(0,0);
         game.play(1,0);
         game.play(0,1);
-        game.play(8,2);
+        game.isValid(8,2);
 
     }
 
