@@ -12,6 +12,8 @@ public class Coordinates {
         return new Coordinates(Integer.parseInt(position[0])-1, Integer.parseInt(position[1])-1);
     }
 
+
+
     public int getX() {
         return x;
     }

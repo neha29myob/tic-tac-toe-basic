@@ -1,14 +1,34 @@
 public class Game {
 
     private Board board;
-    private Player player;
+    private Player player1;
+    private Player player2;
+    private Player currentPlayer;
     private GameState status;
 
     public Game(int size) {
 
         status = GameState.PLAYING;
         board = new Board(size);
-        player = Player.X;
+        player1 = new Player(1, "X");
+        player2 = new Player(2, "O");
+        //this.player1 = player1;
+        //this.player2 = player2;
+        currentPlayer = player1;
+        //establishPlayOrder();
+
+//        player1 = new Player(1);
+//        player2 = new Player(2);
+        //player1.setOrder(1);
+        //player2.setOrder(2);
+        //currentPlayer.setOrder(1);
+    }
+
+    private void establishPlayOrder() {
+        player1.setOrder(1);
+        player2.setOrder(2);
+        currentPlayer.setOrder(1);
+
     }
 
     public String printBoard() {
@@ -41,7 +61,7 @@ public class Game {
     }
 
     private void changePlayers() {
-        player = player.equals(Player.X) ? Player.O : Player.X;
+        currentPlayer = currentPlayer.getOrder() == 1 ? player2 : player1;
     }
 
     public GameState getStatus() {
@@ -49,7 +69,11 @@ public class Game {
     }
 
     public String getTokenOfCurrentPlayer() {
-        return player.getToken();
+        return currentPlayer.getToken();
+    }
+
+    public int getOrderOfCurrentPlayer() {
+        return currentPlayer.getOrder();
     }
 
 }
