@@ -15,20 +15,20 @@ public class Game {
         return board.toString();
     }
 
-    public void play(int x, int y) {
+    public void play(Coordinates coordinates) {
 
-        board.placeMarker(x, y, getTokenOfCurrentPlayer());
+        board.placeMarker(coordinates, getTokenOfCurrentPlayer());
         updateGameStatus();
         changePlayers();
     }
 
-    public boolean isValid(int x, int y) {
+    public boolean isValid(Coordinates coordinates) {
 
-        if (board.isMoveOutOBounds(x, y)) {
+        if (board.isMoveOutOBounds(coordinates)) {
             throw new IndexOutOfBoundsException("Can't place the markers");
         }
 
-        if (board.isOccupied(x, y)) {
+        if (board.isOccupied(coordinates)) {
             throw new IllegalArgumentException("Oh no, a piece is already at this place! Try again...");
         }
 

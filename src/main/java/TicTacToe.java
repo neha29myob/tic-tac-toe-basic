@@ -15,8 +15,8 @@ public class TicTacToe {
             String coordinates = scanner.next();
             Coordinates input = Coordinates.convertInput(coordinates);
 
-            if(game.isValid(input.getX(), input.getY())) {
-                game.play(input.getX(), input.getY());
+            if(game.isValid(input)) {
+                game.play(input);
                 if (game.getStatus().equals(GameState.WIN)) {
                     System.out.println("Move accepted, Well Done");
                 } else {

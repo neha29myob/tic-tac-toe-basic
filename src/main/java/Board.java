@@ -36,16 +36,16 @@ public class Board {
         return board.length;
     }
 
-    public void placeMarker(int x, int y, String token) {
-        board[x][y] = token;
+    public void placeMarker(Coordinates coordinates, String token) {
+        board[coordinates.getX()][coordinates.getY()] = token;
     }
 
-    public boolean isMoveOutOBounds(int x, int y) {
-        return (x < 0 && x > getBoardSize() && y < 0 && y > getBoardSize());
+    public boolean isMoveOutOBounds(Coordinates coordinates) {
+        return (coordinates.getX() < 0 && coordinates.getX() > getBoardSize() && coordinates.getY() < 0 && coordinates.getY() > getBoardSize());
     }
 
-    public boolean isOccupied(int x, int y) {
-        return !board[x][y].equals("-");
+    public boolean isOccupied(Coordinates coordinates) {
+        return !board[coordinates.getX()][coordinates.getY()].equals("-");
     }
 
     public boolean isFull() {
