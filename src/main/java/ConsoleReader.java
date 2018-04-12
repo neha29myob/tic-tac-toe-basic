@@ -8,7 +8,7 @@ public class ConsoleReader {
         this.scanner = scanner;
     }
 
-    public String readInput(){
+    public String getInput(){
         return scanner.nextLine();
 
     }

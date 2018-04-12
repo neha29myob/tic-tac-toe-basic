@@ -10,24 +10,16 @@ public class Game {
 
         status = GameState.PLAYING;
         board = new Board(size);
-        player1 = new Player(1, "X");
-        player2 = new Player(2, "O");
-        //this.player1 = player1;
-        //this.player2 = player2;
-        currentPlayer = player1;
-        //establishPlayOrder();
-
-//        player1 = new Player(1);
-//        player2 = new Player(2);
-        //player1.setOrder(1);
-        //player2.setOrder(2);
-        //currentPlayer.setOrder(1);
+        establishPlayOrder();
+//        player1 = new Player(1, "X");
+//        player2 = new Player(2, "O");
+//        currentPlayer = player1;
     }
 
     private void establishPlayOrder() {
-        player1.setOrder(1);
-        player2.setOrder(2);
-        currentPlayer.setOrder(1);
+        player1 = new Player(1, "X");
+        player2 = new Player(2, "O");
+        currentPlayer = player1;
 
     }
 
@@ -40,6 +32,15 @@ public class Game {
         board.placeMarker(coordinates, getTokenOfCurrentPlayer());
         updateGameStatus();
         changePlayers();
+    }
+
+
+    public boolean isOccupied(Coordinates coordinates) {
+        return board.isOccupied(coordinates);
+    }
+
+    public boolean isOutOfBound(Coordinates coordinates){
+        return board.isMoveOutOBounds(coordinates);
     }
 
     public boolean isValid(Coordinates coordinates) {

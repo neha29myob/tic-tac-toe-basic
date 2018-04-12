@@ -41,7 +41,7 @@ public class Board {
     }
 
     public boolean isMoveOutOBounds(Coordinates coordinates) {
-        return (coordinates.getX() < 0 && coordinates.getX() > getBoardSize() && coordinates.getY() < 0 && coordinates.getY() > getBoardSize());
+        return ((coordinates.getX() < 0 || coordinates.getX() > getBoardSize()) || (coordinates.getY() < 0 || coordinates.getY() > getBoardSize()));
     }
 
     public boolean isOccupied(Coordinates coordinates) {

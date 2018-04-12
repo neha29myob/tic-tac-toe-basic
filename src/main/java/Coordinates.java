@@ -12,6 +12,9 @@ public class Coordinates {
         return new Coordinates(Integer.parseInt(position[0])-1, Integer.parseInt(position[1])-1);
     }
 
+    public static boolean isValidFormat(String input){
+        return input.matches("([0-9]+),([0-9]+)");
+        }
 
 
     public int getX() {
