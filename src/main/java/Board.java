@@ -10,6 +10,11 @@ public class Board {
         //initializeBoard();
     }
 
+    public Board(int size) {
+        this.board = createDynamicBoard(size);
+
+    }
+
     public void setBoard(String[][] board) {
         this.board = board;
     }

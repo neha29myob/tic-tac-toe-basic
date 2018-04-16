@@ -5,6 +5,7 @@ public class Game {
     private Player player2;
     private Player currentPlayer;
     private GameState status;
+    private boolean isRunning;
 
     public Game() {
         status = GameState.PLAYING;
