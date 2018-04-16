@@ -5,18 +5,26 @@ import java.util.List;
 public class Board {
     private String[][] board;
 
-    public Board(int size) {
-        board = new String[size][size];
-        initializeBoard(size);
+    public Board() {
+        board = new String[][]{{"-", "-", "-"}, {"-", "-", "-"}, {"-", "-", "-"}};
+        //initializeBoard();
     }
 
-    private void initializeBoard(int size) {
+    public void setBoard(String[][] board) {
+        this.board = board;
+    }
+
+    public String[][] createDynamicBoard(int size) {
+        String[][] dynamicBoard = new String[size][size];
         for (int row = 0; row < size; row++) {
             for (int column = 0; column < size; column++) {
-                board[row][column] = "-";
+                dynamicBoard[row][column] = "-";
             }
         }
+        return dynamicBoard;
     }
+
+
 
     @Override
     public String toString() {

@@ -6,21 +6,24 @@ public class Game {
     private Player currentPlayer;
     private GameState status;
 
-    public Game(int size) {
-
+    public Game() {
         status = GameState.PLAYING;
-        board = new Board(size);
+        board = new Board();
         establishPlayOrder();
-//        player1 = new Player(1, "X");
-//        player2 = new Player(2, "O");
-//        currentPlayer = player1;
+    }
+
+    public Game(Player player1, Player player2, Board board, int firstPlayer) {
+        status = GameState.PLAYING;
+        this.player1 = player1;
+        this.player2 = player2;
+        this.board = board;
+        currentPlayer = (firstPlayer == player1.getOrder() ? player1 : player2);
     }
 
     private void establishPlayOrder() {
         player1 = new Player(1, "X");
         player2 = new Player(2, "O");
         currentPlayer = player1;
-
     }
 
     public String printBoard() {
@@ -28,7 +31,6 @@ public class Game {
     }
 
     public void play(Coordinates coordinates) {
-
         board.placeMarker(coordinates, getTokenOfCurrentPlayer());
         updateGameStatus();
         changePlayers();
@@ -42,20 +44,6 @@ public class Game {
     public boolean isOutOfBound(Coordinates coordinates){
         return board.isMoveOutOBounds(coordinates);
     }
-
-    public boolean isValid(Coordinates coordinates) {
-
-        if (board.isMoveOutOBounds(coordinates)) {
-            throw new IndexOutOfBoundsException("Can't place the markers");
-        }
-
-        if (board.isOccupied(coordinates)) {
-            throw new IllegalArgumentException("Oh no, a piece is already at this place! Try again...");
-        }
-
-        return true;
-    }
-
 
     private void updateGameStatus() {
         status = board.hasWinner() ? GameState.WIN : board.isFull() ? GameState.DRAW : GameState.PLAYING;
@@ -75,6 +63,19 @@ public class Game {
 
     public int getOrderOfCurrentPlayer() {
         return currentPlayer.getOrder();
+    }
+
+    public boolean isValid(Coordinates coordinates) {
+
+        if (board.isMoveOutOBounds(coordinates)) {
+            throw new IndexOutOfBoundsException("Can't place the markers");
+        }
+
+        if (board.isOccupied(coordinates)) {
+            throw new IllegalArgumentException("Oh no, a piece is already at this place! Try again...");
+        }
+
+        return true;
     }
 
 }

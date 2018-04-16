@@ -1,11 +1,13 @@
+package ConsoleUI;
+
 import java.util.Scanner;
 
 public class ConsoleReader {
 
     private Scanner scanner;
 
-    public ConsoleReader(Scanner scanner) {
-        this.scanner = scanner;
+    public ConsoleReader() {
+        scanner = new Scanner(System.in);
     }
 
     public String getInput(){
