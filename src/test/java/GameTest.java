@@ -1,6 +1,4 @@
-import GameModel.Coordinates;
-import GameModel.Game;
-import GameModel.GameState;
+import GameModel.*;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -11,12 +9,31 @@ public class GameTest {
 
     @Before
     public void setUp(){
+
+
         game = new Game();
     }
 
     @Test
-    public void gameBoardIsInitialised(){
+    public void defaultGameInitialized(){
       assertEquals(GameState.PLAYING, game.getStatus());
+    }
+
+    @Test
+    public void customGameInitialized(){
+        Player player1 = new Player(1,"A");
+        Player player2 = new Player(2, "B");
+        Board board = new Board(4);
+        game = new Game(player1, player2, board, 2);
+        assertEquals("- - - - \n- - - - \n- - - - \n- - - - \n", game.printBoard());
+        assertEquals("B", game.getCurrentPlayer().getToken());
+    }
+
+    @Test
+    public void whenPlayerPlaceMarkersUpdateBoard(){
+        game.play(new Coordinates(2,0));
+        game.play(new Coordinates(1,0));
+        assertEquals("- - - \nO - - \nX - - \n", game.printBoard());
     }
 
     @Test
@@ -45,7 +62,6 @@ public class GameTest {
         game.play(new Coordinates(1,2));
         game.play(new Coordinates(2,1));
         assertEquals(GameState.WIN, game.getStatus());
-
     }
 
     @Test
