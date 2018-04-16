@@ -1,3 +1,5 @@
+package GameModel;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -7,16 +9,10 @@ public class Board {
 
     public Board() {
         board = new String[][]{{"-", "-", "-"}, {"-", "-", "-"}, {"-", "-", "-"}};
-        //initializeBoard();
     }
 
     public Board(int size) {
         this.board = createDynamicBoard(size);
-
-    }
-
-    public void setBoard(String[][] board) {
-        this.board = board;
     }
 
     public String[][] createDynamicBoard(int size) {
@@ -28,8 +24,6 @@ public class Board {
         }
         return dynamicBoard;
     }
-
-
 
     @Override
     public String toString() {

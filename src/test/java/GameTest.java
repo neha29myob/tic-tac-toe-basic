@@ -1,3 +1,6 @@
+import GameModel.Coordinates;
+import GameModel.Game;
+import GameModel.GameState;
 import org.junit.Before;
 import org.junit.Test;
 

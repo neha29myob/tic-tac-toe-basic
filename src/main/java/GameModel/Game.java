@@ -1,3 +1,5 @@
+package GameModel;
+
 public class Game {
 
     private Board board;
@@ -21,6 +23,7 @@ public class Game {
         currentPlayer = (firstPlayer == player1.getOrder() ? player1 : player2);
     }
 
+
     private void establishPlayOrder() {
         player1 = new Player(1, "X");
         player2 = new Player(2, "O");
@@ -32,11 +35,10 @@ public class Game {
     }
 
     public void play(Coordinates coordinates) {
-        board.placeMarker(coordinates, getTokenOfCurrentPlayer());
+        board.placeMarker(coordinates, currentPlayer.getToken());
         updateGameStatus();
         changePlayers();
     }
-
 
     public boolean isOccupied(Coordinates coordinates) {
         return board.isOccupied(coordinates);
@@ -58,12 +60,8 @@ public class Game {
         return status;
     }
 
-    public String getTokenOfCurrentPlayer() {
-        return currentPlayer.getToken();
-    }
-
-    public int getOrderOfCurrentPlayer() {
-        return currentPlayer.getOrder();
+    public Player getCurrentPlayer(){
+        return currentPlayer;
     }
 
     public boolean isValid(Coordinates coordinates) {
@@ -75,7 +73,6 @@ public class Game {
         if (board.isOccupied(coordinates)) {
             throw new IllegalArgumentException("Oh no, a piece is already at this place! Try again...");
         }
-
         return true;
     }
 

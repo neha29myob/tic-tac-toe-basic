@@ -1,12 +1,18 @@
+package GameService;
+
 import ConsoleUI.ConsoleReader;
 import ConsoleUI.ConsoleWriter;
 import Constants.Command;
 import Constants.Messages;
+import GameModel.Board;
+import GameModel.Game;
+import GameModel.Player;
 
 public class GameConfiguration {
 
     private ConsoleReader reader;
     private ConsoleWriter writer;
+    private boolean isValidResponse;
 
     public GameConfiguration(ConsoleReader reader, ConsoleWriter writer) {
         this.reader = reader;
@@ -15,12 +21,31 @@ public class GameConfiguration {
 
     public Game loadGame() {
 
-        writer.write(Messages.CUSTOMIZE_GAME);
-        String customizeGame = reader.getInput();
+        isValidResponse = false;
 
-        if(customizeGame.equalsIgnoreCase(Command.NO)) {
-           return new Game();
+        while (!isValidResponse) {
+            writer.write(Messages.CUSTOMIZE_GAME);
+            String customizeGame = reader.getInput();
+
+            if (customizeGame.equalsIgnoreCase(Command.NO)) {
+                isValidResponse = true;
+                return new Game();
+            } else if (customizeGame.equalsIgnoreCase(Command.YES)) {
+                try {
+                    return getCustomizedGame();
+                } catch (NumberFormatException ex) {
+                    System.out.println("Invalid input " + ex.getMessage() + ". Must be an integer value");
+                    isValidResponse = false;
+                }
+
+            } else {
+                writer.write(Messages.INVALID_INPUT);
+            }
         }
+        return new Game();
+    }
+
+    private Game getCustomizedGame() {
 
         writer.write(Messages.DYNAMIC_BOARD);
         String dynamicBoardSize = reader.getInput();
@@ -38,6 +63,7 @@ public class GameConfiguration {
         String firstPlayer = reader.getInput();
 
         writer.write(Messages.END_CUSTOMISATION);
+        isValidResponse = true;
         return new Game(player1, player2, board, Integer.parseInt(firstPlayer));
     }
 }

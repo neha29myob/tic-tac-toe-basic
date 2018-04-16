@@ -1,5 +1,9 @@
+package GameService;
+
 import Constants.Command;
 import Constants.Messages;
+import GameModel.Coordinates;
+import GameModel.Game;
 
 public class Validator {
 
@@ -25,6 +29,5 @@ public class Validator {
         } else {
             return Messages.INVALID_INPUT;
         }
-
     }
 }
