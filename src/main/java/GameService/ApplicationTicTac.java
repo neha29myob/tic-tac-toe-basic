@@ -33,13 +33,14 @@ public class ApplicationTicTac {
 
     private void nextRoundResponse() {
         writer.write(Messages.NEXT_ROUND);
-        String nextRoundResponse = reader.getInput().trim();
+        String nextRoundResponse = reader.getInput();
         if(nextRoundResponse.equalsIgnoreCase("y")){
             isNextRound = true;
         }
     }
 
     public void run(){
+
         writer.startGame(game);
         while(game.getStatus().equals(GameState.PLAYING)){
             writer.promptUser(game);

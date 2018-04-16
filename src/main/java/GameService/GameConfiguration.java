@@ -30,11 +30,13 @@ public class GameConfiguration {
             if (customizeGame.equalsIgnoreCase(Command.NO)) {
                 isValidResponse = true;
                 return new Game();
+
             } else if (customizeGame.equalsIgnoreCase(Command.YES)) {
+
                 try {
                     return getCustomizedGame();
                 } catch (NumberFormatException ex) {
-                    System.out.println("Invalid input " + ex.getMessage() + ". Must be an integer value");
+                    System.out.println("Invalid input " + ex.getMessage() + ". Must be an integer value\n");
                     isValidResponse = false;
                 }
 
@@ -62,7 +64,6 @@ public class GameConfiguration {
         writer.write(Messages.CHOOSE_FIRST_PLAYER);
         String firstPlayer = reader.getInput();
 
-        writer.write(Messages.END_CUSTOMISATION);
         isValidResponse = true;
         return new Game(player1, player2, board, Integer.parseInt(firstPlayer));
     }
