@@ -2,7 +2,7 @@ package ConsoleUI;
 
 import java.util.Scanner;
 
-public class ConsoleReader {
+public class ConsoleReader implements IReader{
 
     private Scanner scanner;
 
@@ -10,8 +10,8 @@ public class ConsoleReader {
         scanner = new Scanner(System.in);
     }
 
+    @Override
     public String getInput(){
         return scanner.nextLine().trim();
-
     }
 }

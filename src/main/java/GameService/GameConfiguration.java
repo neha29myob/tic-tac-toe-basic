@@ -2,6 +2,8 @@ package GameService;
 
 import ConsoleUI.ConsoleReader;
 import ConsoleUI.ConsoleWriter;
+import ConsoleUI.IReader;
+import ConsoleUI.IWriter;
 import Constants.Command;
 import Constants.Messages;
 import GameModel.Board;
@@ -10,11 +12,11 @@ import GameModel.Player;
 
 public class GameConfiguration {
 
-    private ConsoleReader reader;
-    private ConsoleWriter writer;
+    private IReader reader;
+    private IWriter writer;
     private boolean isValidResponse;
 
-    public GameConfiguration(ConsoleReader reader, ConsoleWriter writer) {
+    public GameConfiguration(IReader reader, IWriter writer) {
         this.reader = reader;
         this.writer = writer;
     }

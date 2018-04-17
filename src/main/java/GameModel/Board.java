@@ -39,7 +39,7 @@ public class Board {
         return printBoard.toString();
     }
 
-    private int getBoardSize() {
+    public int getBoardSize() {
         return board.length;
     }
 

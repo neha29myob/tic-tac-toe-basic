@@ -3,8 +3,9 @@ package ConsoleUI;
 import Constants.Messages;
 import GameModel.Game;
 
-public class ConsoleWriter {
+public class ConsoleWriter implements IWriter {
 
+    @Override
     public void write(String input){ System.out.println(input); }
 
     public void promptUser(Game game){
