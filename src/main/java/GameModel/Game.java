@@ -9,13 +9,11 @@ public class Game {
     private GameState status;
 
     public Game() {
-        status = GameState.PLAYING;
         board = new Board();
         establishPlayOrder();
     }
 
     public Game(Player player1, Player player2, Board board, int firstPlayer) {
-        status = GameState.PLAYING;
         this.player1 = player1;
         this.player2 = player2;
         this.board = board;
@@ -73,18 +71,6 @@ public class Game {
 
     public Player getCurrentPlayer(){
         return currentPlayer;
-    }
-
-    public boolean isValid(Coordinates coordinates) {
-
-        if (board.isMoveOutOBounds(coordinates)) {
-            throw new IndexOutOfBoundsException("Can't place the markers");
-        }
-
-        if (board.isOccupied(coordinates)) {
-            throw new IllegalArgumentException("Oh no, a piece is already at this place! Try again...");
-        }
-        return true;
     }
 
 }

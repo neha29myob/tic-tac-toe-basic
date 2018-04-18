@@ -1,7 +1,7 @@
 package GameService;
 
-import ConsoleUI.ConsoleReader;
-import ConsoleUI.ConsoleWriter;
+import ConsoleUI.IReader;
+import ConsoleUI.IWriter;
 import Constants.Messages;
 import GameModel.Coordinates;
 import GameModel.Game;
@@ -9,21 +9,23 @@ import GameModel.GameState;
 
 public class ApplicationTicTac {
 
-    private ConsoleReader reader;
-    private ConsoleWriter writer;
+    private IReader reader;
+    private IWriter writer;
     private Game game;
     private boolean isNextRound;
+    private boolean isPlaying;
 
-    public ApplicationTicTac(ConsoleReader reader, ConsoleWriter writer) {
+    public ApplicationTicTac(IReader reader, IWriter writer) {
         this.reader = reader;
         this.writer = writer;
         isNextRound = true;
+        isPlaying = true;
     }
 
     public void start(){
-
         while(isNextRound){
             isNextRound = false;
+            isPlaying = true;
             GameConfiguration gameConfiguration = new GameConfiguration(reader,writer);
             game = gameConfiguration.loadGame();
             run();
@@ -39,11 +41,13 @@ public class ApplicationTicTac {
         }
     }
 
-    public void run(){
+    private void run(){
 
-        writer.startGame(game);
-        while(game.getStatus().equals(GameState.PLAYING)){
-            writer.promptUser(game);
+       writer.write(Messages.WELCOME);
+       writer.write(game.printBoard());
+
+        while(isPlaying){
+            writer.write(String.format(Messages.MOVE_MESSAGE, game.getCurrentPlayer().getOrder(), game.getCurrentPlayer().getToken()));
             String userChoice = reader.getInput();
             inputResponse(userChoice);
         }
@@ -58,15 +62,25 @@ public class ApplicationTicTac {
             game.play(coordinates);
             printGameStatus();
         }
-        if (responseMessage.equals(Messages.QUIT_GAME)) System.exit(0);
+        if (responseMessage.equals(Messages.QUIT_GAME)){
+            isPlaying = false;
+
+        }
         else {
             writer.write(responseMessage);
         }
     }
 
     private void printGameStatus() {
-        if (game.getStatus().equals(GameState.WIN)) writer.write(Messages.WIN_MESSAGE);
-        if (game.getStatus().equals(GameState.DRAW)) writer.write(Messages.DRAW_MESSAGE);
+        if (game.getStatus().equals(GameState.WIN)) {
+            isPlaying =false;
+            writer.write(Messages.WIN_MESSAGE);
+        }
+        if (game.getStatus().equals(GameState.DRAW)) {
+            writer.write(Messages.DRAW_MESSAGE);
+            isPlaying =false;
+        }
+
         writer.write(game.printBoard());
     }
 }

@@ -27,7 +27,7 @@ public class GameConfigurationTest {
     public void whenNoCustomizationReturnDefaultGame(){
         List<String> userInputs = new ArrayList<>();
         userInputs.add("n");
-        mockConsoleReader.undecided(userInputs);
+        mockConsoleReader.setUserInput(userInputs);
 
         Game expectedGame = new Game();
 
@@ -48,7 +48,7 @@ public class GameConfigurationTest {
         userInputs.add("P2");
         userInputs.add("2");
 
-        mockConsoleReader.undecided(userInputs);
+        mockConsoleReader.setUserInput(userInputs);
 
         Game actualGame = gameConfiguration.loadGame();
 

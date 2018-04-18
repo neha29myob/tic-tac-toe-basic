@@ -3,7 +3,7 @@ package Mocks;
 import ConsoleUI.IReader;
 import java.util.List;
 
-public class MockConsoleReader implements IReader{
+public class MockConsoleReader implements IReader {
 
     private List<String> userInputs;
     private int count = 0;
@@ -15,7 +15,7 @@ public class MockConsoleReader implements IReader{
         return input;
     }
 
-    public void undecided(List<String> userInputs) {
+    public void setUserInput(List<String> userInputs) {
         this.userInputs = userInputs;
     }
 }

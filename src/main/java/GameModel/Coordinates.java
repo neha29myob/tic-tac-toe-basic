@@ -1,7 +1,5 @@
 package GameModel;
 
-import java.util.Objects;
-
 public class Coordinates {
     private int x;
     private int y;

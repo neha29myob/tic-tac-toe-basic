@@ -18,7 +18,4 @@ public class CoordinateTest {
        Assert.assertEquals(Coordinates.convertInput("9,3"), new Coordinates(8,2));
        Assert.assertEquals(Coordinates.convertInput("1,2"), new Coordinates(0,1));
    }
-
-
-
 }

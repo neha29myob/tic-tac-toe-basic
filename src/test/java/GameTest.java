@@ -3,6 +3,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class GameTest {
     private Game game;
@@ -14,7 +15,9 @@ public class GameTest {
 
     @Test
     public void defaultGameInitialized(){
-      assertEquals(GameState.PLAYING, game.getStatus());
+        assertEquals("- - - \n- - - \n- - - \n", game.printBoard());
+        assertEquals("X", game.getPlayer1().getToken());
+        assertEquals("O", game.getPlayer2().getToken());
     }
 
     @Test
@@ -51,11 +54,19 @@ public class GameTest {
         assertEquals(GameState.WIN, game.getStatus());
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void whenPlayerPlacesMarkerOverAnExistingMarkerShouldThrowException(){
+    @Test
+    public void whenSpotTakenReturnTrueForIsOccupied(){
         game.play(new Coordinates(2,0));
         game.play(new Coordinates(1,0));
-        game.isValid(new Coordinates(1,0));
+        assertTrue(game.isOccupied(new Coordinates(1,0)));
+    }
+
+    @Test
+    public void whenOutOfBoundReturnTrueForIsOccupied(){
+        game.play(new Coordinates(0,0));
+        game.play(new Coordinates(1,0));
+        game.play(new Coordinates(0,1));
+        game.isOutOfBound(new Coordinates(8,2));
     }
 
     @Test
@@ -101,15 +112,6 @@ public class GameTest {
         game.play(new Coordinates(2,2));
         game.play(new Coordinates(2,0));// Match is draw here
         assertEquals(GameState.DRAW, game.getStatus());
-    }
-
-    @Test(expected = IndexOutOfBoundsException.class)
-    public void shouldThrowExceptionWhenMarkerIsPlacedOutOfBoard(){
-        game.play(new Coordinates(0,0));
-        game.play(new Coordinates(1,0));
-        game.play(new Coordinates(0,1));
-        game.isValid(new Coordinates(8,2));
-
     }
 
 }
